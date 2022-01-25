@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -19,10 +17,10 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    AppBar_Drawer appBar_Drawer = Provider.of<AppBar_Drawer>(context);
+    AppBar_Drawer appBarDrawer = Provider.of<AppBar_Drawer>(context);
     return AdvancedDrawer(
       backdropColor: Colors.grey[200],
-      controller: appBar_Drawer.advancedDrawerController,
+      controller: appBarDrawer.advancedDrawerController,
       animationCurve: Curves.easeInOut,
       animationDuration: const Duration(milliseconds: 300),
       animateChildDecoration: true,
@@ -37,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
         borderRadius: BorderRadius.all(Radius.circular(16)),
       ),
-      drawer: Drawer(elevation: 0, child: drawer_bar()),
+      drawer: Drawer(elevation: 0, child: drawerbar()),
       child: Scaffold(
         backgroundColor: bgColor,
         appBar: AppBar(
@@ -46,9 +44,9 @@ class _HomeScreenState extends State<HomeScreen> {
           title: Helper.text(
               "Screw", 20, 0, Colors.black, FontWeight.bold, TextAlign.center),
           leading: IconButton(
-            onPressed: appBar_Drawer.handleMenuButtonPressed,
+            onPressed: appBarDrawer.handleMenuButtonPressed,
             icon: ValueListenableBuilder<AdvancedDrawerValue>(
-              valueListenable: appBar_Drawer.advancedDrawerController,
+              valueListenable: appBarDrawer.advancedDrawerController,
               builder: (_, value, __) {
                 return AnimatedSwitcher(
                   duration: const Duration(milliseconds: 250),
@@ -64,7 +62,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         body: SingleChildScrollView(
           child: SizedBox(
-            height: MediaQuery.of(context).size.height,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -86,8 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     } else {
                       return SizedBox(
                           child: Padding(
-                        padding:
-                            const EdgeInsets.only(top: 20, left: 30, right: 30),
+                        padding: const EdgeInsets.only(top: 20),
                         child: CarouselSlider.builder(
                           itemCount: snapshot.data!.docs.length,
                           itemBuilder: (context, index, realIndex) {
@@ -127,45 +123,274 @@ class _HomeScreenState extends State<HomeScreen> {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const SizedBox();
                     } else {
-                      return Expanded(
-                          child: Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: GridView.builder(
-                          itemCount: snapshot.data!.docs.length,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.grey[200]),
-                                  child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        SizedBox(
-                                          height: 50,
-                                          width: 100,
-                                          child: Image.network(snapshot
-                                              .data!.docs[index]['image']),
-                                        ),
-                                      ])),
-                            );
-                          },
-                          gridDelegate:
-                              const SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 100,
+                      return SizedBox(
+                        height: 200,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 20.0, right: 20, top: 20),
+                          child: GridView.builder(
+                            itemCount: snapshot.data!.docs.length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.grey[200]),
+                                    child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          SizedBox(
+                                            height: 50,
+                                            width: 100,
+                                            child: Image.network(snapshot
+                                                .data!.docs[index]['image']),
+                                          ),
+                                        ])),
+                              );
+                            },
+                            gridDelegate:
+                                const SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent: 100,
+                            ),
                           ),
                         ),
-                      ));
+                      );
                     }
                   },
                 ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20.0, top: 20),
+                  child: Helper.text("Electrical Appliances", 18, 0,
+                      Colors.black, FontWeight.w500, TextAlign.start),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20.0, top: 5),
+                  child: Helper.text("Appliances we do for service", 14, 0,
+                      Colors.grey, FontWeight.normal, TextAlign.start),
+                ),
+                StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection("Main Service")
+                      .where("category", isEqualTo: "Electricals")
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: Helper.text("Loading..", 10, 0, Colors.black,
+                            FontWeight.normal, TextAlign.center),
+                      );
+                    } else {
+                      return SizedBox(
+                        height: 170,
+                        width: double.infinity,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: snapshot.data!.docs.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.only(
+                                left: 20.0,
+                                top: 20,
+                              ),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: 100,
+                                    width: 200,
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: NetworkImage(snapshot
+                                                .data!.docs[index]['image']),
+                                            fit: BoxFit.cover),
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Helper.text(
+                                      snapshot.data!.docs[index]['title'],
+                                      15,
+                                      0,
+                                      Colors.black,
+                                      FontWeight.normal,
+                                      TextAlign.center),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                    }
+                  },
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 20.0,
+                  ),
+                  child: Helper.text("Cleaning", 18, 0, Colors.black,
+                      FontWeight.w500, TextAlign.start),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20.0, top: 5),
+                  child: Helper.text("Works in Cleaning", 14, 0, Colors.grey,
+                      FontWeight.normal, TextAlign.start),
+                ),
+                StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection("Main Service")
+                      .where("category", isEqualTo: "Cleaning")
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: Helper.text("Loading..", 10, 0, Colors.black,
+                            FontWeight.normal, TextAlign.center),
+                      );
+                    } else {
+                      return SizedBox(
+                        height: 200,
+                        width: double.infinity,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: snapshot.data!.docs.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.only(
+                                left: 20.0,
+                                top: 20,
+                              ),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: 100,
+                                    width: 200,
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: NetworkImage(snapshot
+                                                .data!.docs[index]['image']),
+                                            fit: BoxFit.cover),
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Helper.text(
+                                      snapshot.data!.docs[index]['title'],
+                                      15,
+                                      0,
+                                      Colors.black,
+                                      FontWeight.normal,
+                                      TextAlign.center),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                    }
+                  },
+                )
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  Container drawerbar() {
+    return Container(
+        color: Colors.grey[200],
+        child: Column(children: [
+          const SizedBox(
+            height: 50,
+          ),
+          const CircleAvatar(
+            radius: 50,
+            backgroundColor: Colors.black,
+            child: Icon(Icons.person, color: Colors.white),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 30.0,
+              top: 30,
+            ),
+            child: Row(
+              children: [
+                Helper.text("Home", 18, 0, Colors.black, FontWeight.normal,
+                    TextAlign.center),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 30.0,
+              top: 30,
+            ),
+            child: Row(
+              children: [
+                Helper.text("Appoinments", 18, 0, Colors.black,
+                    FontWeight.normal, TextAlign.center),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 30.0,
+              top: 30,
+            ),
+            child: Row(
+              children: [
+                Helper.text("Search", 18, 0, Colors.black, FontWeight.normal,
+                    TextAlign.center),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 30.0,
+              top: 30,
+            ),
+            child: Row(
+              children: [
+                Helper.text("Offers", 18, 0, Colors.black, FontWeight.normal,
+                    TextAlign.center),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 30.0,
+              top: 30,
+            ),
+            child: Row(
+              children: [
+                Helper.text("Customer Care", 18, 0, Colors.black,
+                    FontWeight.normal, TextAlign.center),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 30.0,
+              top: 30,
+            ),
+            child: Row(
+              children: [
+                Helper.text("Who we are", 18, 0, Colors.black,
+                    FontWeight.normal, TextAlign.center),
+              ],
+            ),
+          ),
+          const Spacer(),
+          box("Signin / Join", Colors.black, 10, 250, Colors.white),
+          const SizedBox(
+            height: 20,
+          ),
+        ]));
   }
 }
