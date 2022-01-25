@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
@@ -124,12 +126,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: GridView.builder(
                           itemCount: snapshot.data!.docs.length,
                           itemBuilder: (context, index) {
-                            return Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Colors.blueGrey,
-                                ),
-                                height: 100,
+                            return Card(
+                                color: Colors
+                                    .primaries[(Random()
+                                        .nextInt(Colors.primaries.length))]
+                                    .shade200,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20)),
                                 child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
