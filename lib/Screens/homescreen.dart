@@ -4,8 +4,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
+import 'package:home_service/providers/appbar_provider.dart';
 import 'package:home_service/utils/constants.dart';
 import 'package:home_service/widgets/containers.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -17,10 +19,10 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    final _advancedDrawerController = AdvancedDrawerController();
+    AppBar_Drawer appBar_Drawer = Provider.of<AppBar_Drawer>(context);
     return AdvancedDrawer(
       backdropColor: Colors.grey[200],
-      controller: _advancedDrawerController,
+      controller: appBar_Drawer.advancedDrawerController,
       animationCurve: Curves.easeInOut,
       animationDuration: const Duration(milliseconds: 300),
       animateChildDecoration: true,
@@ -39,13 +41,27 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         backgroundColor: bgColor,
         appBar: AppBar(
-            backgroundColor: bgColor,
-            elevation: 0,
-            title: Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: Helper.text("Serwe", 20, 0, Colors.black, FontWeight.bold,
-                  TextAlign.center),
-            )),
+          backgroundColor: bgColor,
+          elevation: 0,
+          title: Helper.text(
+              "Screw", 20, 0, Colors.black, FontWeight.bold, TextAlign.center),
+          leading: IconButton(
+            onPressed: appBar_Drawer.handleMenuButtonPressed,
+            icon: ValueListenableBuilder<AdvancedDrawerValue>(
+              valueListenable: appBar_Drawer.advancedDrawerController,
+              builder: (_, value, __) {
+                return AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 250),
+                  child: Icon(
+                    value.visible ? Icons.clear : Icons.menu,
+                    key: ValueKey<bool>(value.visible),
+                    color: Colors.black,
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
         body: SingleChildScrollView(
           child: SizedBox(
             height: MediaQuery.of(context).size.height,
@@ -66,9 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(
-                        child: CircularProgressIndicator(color: Colors.black),
-                      );
+                      return const Center(child: SizedBox());
                     } else {
                       return SizedBox(
                           child: Padding(
@@ -90,7 +104,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             height: 150.0,
                             enlargeCenterPage: true,
                             autoPlay: true,
-                            aspectRatio: 16 / 9,
                             autoPlayCurve: Curves.fastOutSlowIn,
                             enableInfiniteScroll: true,
                             autoPlayAnimationDuration:

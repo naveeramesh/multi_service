@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:home_service/providers/appbar_provider.dart';
+import 'package:provider/provider.dart';
 
 import 'Screens/homescreen.dart';
 
@@ -16,12 +18,15 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: const SplashScreen());
+    return ChangeNotifierProvider(
+      create: (context) => AppBar_Drawer(),
+      child: MaterialApp(
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          home: const SplashScreen()),
+    );
   }
 }
 
@@ -36,9 +41,9 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     Timer(
-      const  Duration(seconds: 4),
+        const Duration(seconds: 4),
         () => Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (b) =>const HomeScreen())));
+            context, MaterialPageRoute(builder: (b) => const HomeScreen())));
     super.initState();
   }
 
