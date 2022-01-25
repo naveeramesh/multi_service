@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
@@ -18,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final _advancedDrawerController = AdvancedDrawerController();
     return AdvancedDrawer(
-      backdropColor: Colors.blueGrey,
+      backdropColor: Colors.grey[200],
       controller: _advancedDrawerController,
       animationCurve: Curves.easeInOut,
       animationDuration: const Duration(milliseconds: 300),
@@ -38,16 +39,13 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         backgroundColor: bgColor,
         appBar: AppBar(
-          toolbarHeight: 90,
-          centerTitle: true,
-          backgroundColor: bgColor,
-          elevation: 0,
-          title: Padding(
-            padding: const EdgeInsets.only(top: 10.0),
-            child:
-                boxcontainer("Search...", appbarcolor, 10, Icons.search, 400),
-          ),
-        ),
+            backgroundColor: bgColor,
+            elevation: 0,
+            title: Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: Helper.text("Serwe", 20, 0, Colors.black, FontWeight.bold,
+                  TextAlign.center),
+            )),
         body: SingleChildScrollView(
           child: SizedBox(
             height: MediaQuery.of(context).size.height,
@@ -55,55 +53,51 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 20.0, top: 10),
-                  child: Helper.text("Exciting offers", 18, 0, Colors.black,
-                      FontWeight.w500, TextAlign.start),
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20.0, right: 20),
+                    child: boxcontainer(
+                        "Search...", Colors.grey[200]!, 10, Icons.search, 400),
+                  ),
                 ),
                 StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance
                       .collection("Offers")
                       .snapshots(),
                   builder: (context, snapshot) {
-                    print(snapshot.data?.docs);
-                    print(snapshot.data?.docs.length);
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(
-                        child: CircularProgressIndicator(color: Colors.white),
+                        child: CircularProgressIndicator(color: Colors.black),
                       );
                     } else {
-                      return Padding(
-                        padding: const EdgeInsets.only(left: 10.0),
-                        child: SizedBox(
-                          height: 120,
-                          width: double.infinity,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: snapshot.data!.docs.length,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 10.0, right: 10, top: 20),
-                                child: Container(
-                                  width: 150,
-                                  decoration: BoxDecoration(
-                                    color: appbarcolor,
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  child: Center(
-                                    child: Helper.text(
-                                        snapshot.data!.docs[index]['title'],
-                                        15,
-                                        0,
-                                        iconcolor,
-                                        FontWeight.normal,
-                                        TextAlign.center),
-                                  ),
-                                ),
-                              );
-                            },
+                      return SizedBox(
+                          child: Padding(
+                        padding:
+                            const EdgeInsets.only(top: 20, left: 30, right: 30),
+                        child: CarouselSlider.builder(
+                          itemCount: snapshot.data!.docs.length,
+                          itemBuilder: (context, index, realIndex) {
+                            return Container(
+                                height: 150,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    image: DecorationImage(
+                                        image: NetworkImage(snapshot
+                                            .data!.docs[index]['image']),
+                                        fit: BoxFit.cover)));
+                          },
+                          options: CarouselOptions(
+                            height: 150.0,
+                            enlargeCenterPage: true,
+                            autoPlay: true,
+                            aspectRatio: 16 / 9,
+                            autoPlayCurve: Curves.fastOutSlowIn,
+                            enableInfiniteScroll: true,
+                            autoPlayAnimationDuration:
+                                const Duration(milliseconds: 800),
                           ),
                         ),
-                      );
+                      ));
                     }
                   },
                 ),
@@ -126,46 +120,34 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: GridView.builder(
                           itemCount: snapshot.data!.docs.length,
                           itemBuilder: (context, index) {
-                            return Card(
-                                color: Colors
-                                    .primaries[(Random()
-                                        .nextInt(Colors.primaries.length))]
-                                    .shade200,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20)),
-                                child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      SizedBox(
-                                        height: 40,
-                                        width: 100,
-                                        child: Image.network(snapshot
-                                            .data!.docs[index]['image']),
-                                      ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      Helper.text(
-                                          snapshot.data!.docs[index]
-                                              ['category'],
-                                          15,
-                                          0,
-                                          Colors.white,
-                                          FontWeight.normal,
-                                          TextAlign.center)
-                                    ]));
+                            return Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.grey[200]),
+                                  child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        SizedBox(
+                                          height: 50,
+                                          width: 100,
+                                          child: Image.network(snapshot
+                                              .data!.docs[index]['image']),
+                                        ),
+                                      ])),
+                            );
                           },
                           gridDelegate:
                               const SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 200,
-                            crossAxisSpacing: 20,
-                            mainAxisSpacing: 20,
+                            maxCrossAxisExtent: 100,
                           ),
                         ),
                       ));
                     }
                   },
-                )
+                ),
               ],
             ),
           ),

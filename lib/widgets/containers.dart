@@ -14,7 +14,7 @@ Container boxcontainer(
       child: TextField(
         decoration: InputDecoration(
           hintText: text,
-          hintStyle: GoogleFonts.roboto(color: Colors.grey),
+          hintStyle: GoogleFonts.roboto(color: Colors.black),
           enabledBorder: const OutlineInputBorder(
               borderSide: BorderSide(
             color: Colors.transparent,
@@ -47,15 +47,15 @@ Container box(
 
 Container drawer_bar() {
   return Container(
-      color: Colors.blueGrey,
+      color: Colors.grey[200],
       child: Column(children: [
         const SizedBox(
           height: 50,
         ),
         const CircleAvatar(
           radius: 50,
-          backgroundColor: Colors.white,
-          child: Icon(Icons.person, color: Colors.black),
+          backgroundColor: Colors.black,
+          child: Icon(Icons.person, color: Colors.white),
         ),
         Padding(
           padding: const EdgeInsets.only(
@@ -64,7 +64,7 @@ Container drawer_bar() {
           ),
           child: Row(
             children: [
-              Helper.text("Home", 18, 0, Colors.white, FontWeight.normal,
+              Helper.text("Home", 18, 0, Colors.black, FontWeight.normal,
                   TextAlign.center),
             ],
           ),
@@ -76,7 +76,7 @@ Container drawer_bar() {
           ),
           child: Row(
             children: [
-              Helper.text("Appoinments", 18, 0, Colors.white, FontWeight.normal,
+              Helper.text("Appoinments", 18, 0, Colors.black, FontWeight.normal,
                   TextAlign.center),
             ],
           ),
@@ -88,7 +88,7 @@ Container drawer_bar() {
           ),
           child: Row(
             children: [
-              Helper.text("Search", 18, 0, Colors.white, FontWeight.normal,
+              Helper.text("Search", 18, 0, Colors.black, FontWeight.normal,
                   TextAlign.center),
             ],
           ),
@@ -100,7 +100,7 @@ Container drawer_bar() {
           ),
           child: Row(
             children: [
-              Helper.text("Offers", 18, 0, Colors.white, FontWeight.normal,
+              Helper.text("Offers", 18, 0, Colors.black, FontWeight.normal,
                   TextAlign.center),
             ],
           ),
@@ -112,7 +112,7 @@ Container drawer_bar() {
           ),
           child: Row(
             children: [
-              Helper.text("Customer Care", 18, 0, Colors.white,
+              Helper.text("Customer Care", 18, 0, Colors.black,
                   FontWeight.normal, TextAlign.center),
             ],
           ),
@@ -124,13 +124,13 @@ Container drawer_bar() {
           ),
           child: Row(
             children: [
-              Helper.text("Who we are", 18, 0, Colors.white, FontWeight.normal,
+              Helper.text("Who we are", 18, 0, Colors.black, FontWeight.normal,
                   TextAlign.center),
             ],
           ),
         ),
         const Spacer(),
-        box("Signin / Join", Colors.white, 10, 250, Colors.black),
+        box("Signin / Join", Colors.black, 10, 250, Colors.white),
         const SizedBox(
           height: 20,
         ),
