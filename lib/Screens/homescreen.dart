@@ -1,7 +1,4 @@
-import 'dart:math';
-
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:home_service/models/mainservice.dart';
@@ -161,36 +158,40 @@ class _HomeScreenState extends State<HomeScreen> {
                   scrollDirection: Axis.horizontal,
                   itemCount: electricalservice.length,
                   itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(
-                        left: 20.0,
-                        top: 20,
-                      ),
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 100,
-                            width: 200,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: NetworkImage(
-                                        electricalservice[index].image),
-                                    fit: BoxFit.cover),
-                                borderRadius: BorderRadius.circular(10)),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Helper.text(
-                              electricalservice[index].title.toString(),
-                              15,
-                              0,
-                              Colors.black,
-                              FontWeight.normal,
-                              TextAlign.center),
-                        ],
-                      ),
-                    );
+                    if (electricalservice[index].category == "Electricals") {
+                      return Padding(
+                        padding: const EdgeInsets.only(
+                          left: 20.0,
+                          top: 20,
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 100,
+                              width: 200,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: NetworkImage(
+                                          electricalservice[index].image),
+                                      fit: BoxFit.cover),
+                                  borderRadius: BorderRadius.circular(10)),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Helper.text(
+                                electricalservice[index].title.toString(),
+                                15,
+                                0,
+                                Colors.black,
+                                FontWeight.normal,
+                                TextAlign.center),
+                          ],
+                        ),
+                      );
+                    } else {
+                      return SizedBox();
+                    }
                   },
                 ),
               ),
@@ -213,36 +214,40 @@ class _HomeScreenState extends State<HomeScreen> {
                   scrollDirection: Axis.horizontal,
                   itemCount: electricalservice.length,
                   itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(
-                        left: 20.0,
-                        top: 20,
-                      ),
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 100,
-                            width: 200,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image:
-                                        NetworkImage(electricalservice[index].image),
-                                    fit: BoxFit.cover),
-                                borderRadius: BorderRadius.circular(10)),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Helper.text(
-                              electricalservice[index].title.toString(),
-                              15,
-                              0,
-                              Colors.black,
-                              FontWeight.normal,
-                              TextAlign.center),
-                        ],
-                      ),
-                    );
+                    if (electricalservice[index].category == "Cleaning") {
+                      return Padding(
+                        padding: const EdgeInsets.only(
+                          left: 20.0,
+                          top: 20,
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 100,
+                              width: 200,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: NetworkImage(
+                                          electricalservice[index].image),
+                                      fit: BoxFit.cover),
+                                  borderRadius: BorderRadius.circular(10)),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Helper.text(
+                                electricalservice[index].title.toString(),
+                                15,
+                                0,
+                                Colors.black,
+                                FontWeight.normal,
+                                TextAlign.center),
+                          ],
+                        ),
+                      );
+                    } else {
+                      return const SizedBox();
+                    }
                   },
                 ),
               ),

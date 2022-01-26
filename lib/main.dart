@@ -36,14 +36,10 @@ class MyApp extends StatelessWidget {
           initialData: [],
         ),
         StreamProvider<List<MainService>>.value(
-          value: FbDatabase().getelectrical("Main Service", "Electricals"),
+          value: FbDatabase().getelectrical("Main Service"),
           initialData: [],
         ),
-        StreamProvider<List<MainService>>.value(
-          value: FbDatabase().getelectrical("Main Service", "Cleaning"),
-          initialData: [],
-        ),
-       
+        
       ],
       child: MaterialApp(
           title: 'Flutter Demo',
