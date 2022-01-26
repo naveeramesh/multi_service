@@ -25,19 +25,18 @@ class FbDatabase {
         .collection(collection)
         .where("category", isEqualTo: name)
         .snapshots()
-        .map((event) => event.docs
-            .map((e) =>
-                MainService(title: e.data()['title'], image: e.data()['image']))
+        .map((snapShot) => snapShot.docs
+            .map((document) => MainService.fromJson(document.data()))
             .toList());
   }
-   Stream<List<Cleaning>> getcleaning(String collection, String name) {
-    return firebaseFirestore
-        .collection(collection)
-        .where("category", isEqualTo: name)
-        .snapshots()
-        .map((event) => event.docs
-            .map((e) =>
-                Cleaning(title: e.data()['title'], image: e.data()['image']))
-            .toList());
-  }
+  //  Stream<List<Cleaning>> getcleaning(String collection, String name) {
+  //   return firebaseFirestore
+  //       .collection(collection)
+  //       .where("category", isEqualTo: name)
+  //       .snapshots()
+  //       .map((event) => event.docs
+  //           .map((e) =>
+  //               Cleaning(title: e.data()['title'], image: e.data()['image']))
+  //           .toList());
+  // }
 }

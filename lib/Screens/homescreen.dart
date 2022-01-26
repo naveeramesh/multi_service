@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
     List<Offer> offer = Provider.of<List<Offer>>(context);
     List<MainService> electricalservice =
         Provider.of<List<MainService>>(context);
-    List<Cleaning> cleanservice = Provider.of<List<Cleaning>>(context);
+
     return AdvancedDrawer(
       backdropColor: Colors.grey[200],
       controller: appBarDrawer.advancedDrawerController,
@@ -209,7 +211,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: double.infinity,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: cleanservice.length,
+                  itemCount: electricalservice.length,
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: const EdgeInsets.only(
@@ -224,7 +226,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             decoration: BoxDecoration(
                                 image: DecorationImage(
                                     image:
-                                        NetworkImage(cleanservice[index].image),
+                                        NetworkImage(electricalservice[index].image),
                                     fit: BoxFit.cover),
                                 borderRadius: BorderRadius.circular(10)),
                           ),
@@ -232,7 +234,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             height: 10,
                           ),
                           Helper.text(
-                              cleanservice[index].title.toString(),
+                              electricalservice[index].title.toString(),
                               15,
                               0,
                               Colors.black,
