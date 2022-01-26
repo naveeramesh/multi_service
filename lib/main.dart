@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:home_service/models/service.dart';
 import 'package:home_service/providers/appbar_provider.dart';
+import 'package:home_service/service/database.dart';
 import 'package:provider/provider.dart';
 
 import 'Screens/homescreen.dart';
@@ -43,7 +45,12 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(
         const Duration(seconds: 4),
         () => Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (b) => const HomeScreen())));
+            context,
+            MaterialPageRoute(
+                builder: (b) => StreamProvider<List<Service>>.value(
+                    value: FbDatabase().data,
+                    initialData: [],
+                    child: const HomeScreen()))));
     super.initState();
   }
 
