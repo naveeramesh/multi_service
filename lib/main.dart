@@ -13,8 +13,8 @@ import 'package:provider/provider.dart';
 import 'Screens/homescreen.dart';
 
 void main() async {
-  await WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp();
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -36,11 +36,11 @@ class MyApp extends StatelessWidget {
           initialData: [],
         ),
         StreamProvider<List<MainService>>.value(
-          value: FbDatabase().getelectrical("Main Serive","Electricals"),
+          value: FbDatabase().getelectrical("Main Service", "Electricals"),
           initialData: [],
         ),
-        StreamProvider<List<MainService>>.value(
-          value: FbDatabase().getelectrical("Main Service","Cleaning"),
+        StreamProvider<List<Cleaning>>.value(
+          value: FbDatabase().getcleaning("Main Service", "Cleaning"),
           initialData: [],
         )
       ],

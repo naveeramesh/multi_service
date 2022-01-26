@@ -12,11 +12,11 @@ class FbDatabase {
   }
 
   Stream<List<Service>> getdata(String collection) {
-    return firebaseFirestore.collection("Services").snapshots().map((event) =>
+    return firebaseFirestore.collection(collection).snapshots().map((event) =>
         event
             .docs
             .map((e) =>
-                Service(title: e.data()['title'], image: e.data()['image']))
+                Service(title: e.data()['category'], image: e.data()['image']))
             .toList());
   }
 
@@ -28,6 +28,16 @@ class FbDatabase {
         .map((event) => event.docs
             .map((e) =>
                 MainService(title: e.data()['title'], image: e.data()['image']))
+            .toList());
+  }
+   Stream<List<Cleaning>> getcleaning(String collection, String name) {
+    return firebaseFirestore
+        .collection(collection)
+        .where("category", isEqualTo: name)
+        .snapshots()
+        .map((event) => event.docs
+            .map((e) =>
+                Cleaning(title: e.data()['title'], image: e.data()['image']))
             .toList());
   }
 }

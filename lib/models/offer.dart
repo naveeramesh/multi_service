@@ -8,8 +8,6 @@ class Offer {
   Offer.fromJson(Map<String, dynamic> json) : image = json["image"];
 
   Map<String, dynamic> toJson() => {
-      
         "image": image,
-        
       };
 }

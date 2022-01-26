@@ -23,7 +23,9 @@ class _HomeScreenState extends State<HomeScreen> {
     AppBar_Drawer appBarDrawer = Provider.of<AppBar_Drawer>(context);
     List<Service> service = Provider.of<List<Service>>(context);
     List<Offer> offer = Provider.of<List<Offer>>(context);
-    List<MainService> mainservice = Provider.of<List<MainService>>(context);
+    List<MainService> electricalservice =
+        Provider.of<List<MainService>>(context);
+    List<Cleaning> cleanservice = Provider.of<List<Cleaning>>(context);
     return AdvancedDrawer(
       backdropColor: Colors.grey[200],
       controller: appBarDrawer.advancedDrawerController,
@@ -150,60 +152,45 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Helper.text("Appliances we do for service", 14, 0,
                     Colors.grey, FontWeight.normal, TextAlign.start),
               ),
-              StreamBuilder<QuerySnapshot>(
-                stream: FirebaseFirestore.instance
-                    .collection("Main Service")
-                    .where("category", isEqualTo: "Electricals")
-                    .snapshots(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(
-                      child: Helper.text("Loading..", 10, 0, Colors.black,
-                          FontWeight.normal, TextAlign.center),
-                    );
-                  } else {
-                    return SizedBox(
-                      height: 170,
-                      width: double.infinity,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: snapshot.data!.docs.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.only(
-                              left: 20.0,
-                              top: 20,
-                            ),
-                            child: Column(
-                              children: [
-                                Container(
-                                  height: 100,
-                                  width: 200,
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: NetworkImage(snapshot
-                                              .data!.docs[index]['image']),
-                                          fit: BoxFit.cover),
-                                      borderRadius: BorderRadius.circular(10)),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Helper.text(
-                                    snapshot.data!.docs[index]['title'],
-                                    15,
-                                    0,
-                                    Colors.black,
-                                    FontWeight.normal,
-                                    TextAlign.center),
-                              ],
-                            ),
-                          );
-                        },
+              SizedBox(
+                height: 170,
+                width: double.infinity,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: electricalservice.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(
+                        left: 20.0,
+                        top: 20,
+                      ),
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 100,
+                            width: 200,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: NetworkImage(
+                                        electricalservice[index].image),
+                                    fit: BoxFit.cover),
+                                borderRadius: BorderRadius.circular(10)),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Helper.text(
+                              electricalservice[index].title.toString(),
+                              15,
+                              0,
+                              Colors.black,
+                              FontWeight.normal,
+                              TextAlign.center),
+                        ],
                       ),
                     );
-                  }
-                },
+                  },
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(
@@ -217,61 +204,46 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Helper.text("Works in Cleaning", 14, 0, Colors.grey,
                     FontWeight.normal, TextAlign.start),
               ),
-              StreamBuilder<QuerySnapshot>(
-                stream: FirebaseFirestore.instance
-                    .collection("Main Service")
-                    .where("category", isEqualTo: "Cleaning")
-                    .snapshots(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(
-                      child: Helper.text("Loading..", 10, 0, Colors.black,
-                          FontWeight.normal, TextAlign.center),
-                    );
-                  } else {
-                    return SizedBox(
-                      height: 200,
-                      width: double.infinity,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: snapshot.data!.docs.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.only(
-                              left: 20.0,
-                              top: 20,
-                            ),
-                            child: Column(
-                              children: [
-                                Container(
-                                  height: 100,
-                                  width: 200,
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: NetworkImage(snapshot
-                                              .data!.docs[index]['image']),
-                                          fit: BoxFit.cover),
-                                      borderRadius: BorderRadius.circular(10)),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Helper.text(
-                                    snapshot.data!.docs[index]['title'],
-                                    15,
-                                    0,
-                                    Colors.black,
-                                    FontWeight.normal,
-                                    TextAlign.center),
-                              ],
-                            ),
-                          );
-                        },
+              SizedBox(
+                height: 200,
+                width: double.infinity,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: cleanservice.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(
+                        left: 20.0,
+                        top: 20,
+                      ),
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 100,
+                            width: 200,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image:
+                                        NetworkImage(cleanservice[index].image),
+                                    fit: BoxFit.cover),
+                                borderRadius: BorderRadius.circular(10)),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Helper.text(
+                              cleanservice[index].title.toString(),
+                              15,
+                              0,
+                              Colors.black,
+                              FontWeight.normal,
+                              TextAlign.center),
+                        ],
                       ),
                     );
-                  }
-                },
-              )
+                  },
+                ),
+              ),
             ]),
           ),
         ),

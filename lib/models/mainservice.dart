@@ -24,3 +24,17 @@ class MainService {
         "category": category,
       };
 }
+
+class Cleaning{
+
+  Cleaning({
+    this.title,
+    this.price,
+    required this.image,
+    this.category,
+  });
+   String? title;
+  int? price;
+  String image;
+  String? category;
+}
