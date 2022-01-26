@@ -1,16 +1,33 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:home_service/models/mainservice.dart';
+import 'package:home_service/models/offer.dart';
 import 'package:home_service/models/service.dart';
 
 class FbDatabase {
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
-  Stream<List<Service>> get data {
-    return firebaseFirestore.collection("Service").snapshots().map((event) =>
-        event.docs
+  Stream<List<Offer>> getoffer(String collection) {
+    return firebaseFirestore.collection(collection).snapshots().map((event) =>
+        event.docs.map((e) => Offer(image: e.data()['image'])).toList());
+  }
+
+  Stream<List<Service>> getdata(String collection) {
+    return firebaseFirestore.collection("Services").snapshots().map((event) =>
+        event
+            .docs
             .map((e) =>
                 Service(title: e.data()['title'], image: e.data()['image']))
+            .toList());
+  }
+
+  Stream<List<MainService>> getelectrical(String collection, String name) {
+    return firebaseFirestore
+        .collection(collection)
+        .where("category", isEqualTo: name)
+        .snapshots()
+        .map((event) => event.docs
+            .map((e) =>
+                MainService(title: e.data()['title'], image: e.data()['image']))
             .toList());
   }
 }

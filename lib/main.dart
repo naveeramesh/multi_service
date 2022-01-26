@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:home_service/models/mainservice.dart';
+import 'package:home_service/models/offer.dart';
 import 'package:home_service/models/service.dart';
 import 'package:home_service/providers/appbar_provider.dart';
 import 'package:home_service/service/database.dart';
@@ -20,8 +22,28 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => AppBar_Drawer(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => AppBar_Drawer(),
+        ),
+        StreamProvider<List<Offer>>.value(
+          value: FbDatabase().getoffer("Offers"),
+          initialData: [],
+        ),
+        StreamProvider<List<Service>>.value(
+          value: FbDatabase().getdata("Services"),
+          initialData: [],
+        ),
+        StreamProvider<List<MainService>>.value(
+          value: FbDatabase().getelectrical("Main Serive","Electricals"),
+          initialData: [],
+        ),
+        StreamProvider<List<MainService>>.value(
+          value: FbDatabase().getelectrical("Main Service","Cleaning"),
+          initialData: [],
+        )
+      ],
       child: MaterialApp(
           title: 'Flutter Demo',
           theme: ThemeData(
@@ -45,12 +67,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(
         const Duration(seconds: 4),
         () => Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (b) => StreamProvider<List<Service>>.value(
-                    value: FbDatabase().data,
-                    initialData: [],
-                    child: const HomeScreen()))));
+            context, MaterialPageRoute(builder: (b) => const HomeScreen())));
     super.initState();
   }
 

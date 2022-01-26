@@ -1,14 +1,8 @@
-import 'dart:convert';
-
-Service serviceFromJson(String str) => Service.fromJson(json.decode(str));
-
-String serviceToJson(Service data) => json.encode(data.toJson());
-
-class Service {
-  Service({
+class MainService {
+  MainService({
     this.title,
     this.price,
-   required this.image,
+    required this.image,
     this.category,
   });
 
@@ -17,7 +11,7 @@ class Service {
   String image;
   String? category;
 
-  Service.fromJson(Map<String, dynamic> json)
+  MainService.fromJson(Map<String, dynamic> json)
       : title = json["title"],
         price = json["price"],
         image = json["image"],
