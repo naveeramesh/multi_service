@@ -24,7 +24,9 @@ class FbDatabase {
     return firebaseFirestore.collection(collection).snapshots().map(
         (snapShot) => snapShot.docs
             .map((document) => MainService(image: document.data()['image'],video: document.data()['video'],
-            title: document.data()['title'],category: document.data()['category'],price: document.data()['price']))
+            title: document.data()['title'],category: document.data()['category'],
+            price: document.data()['price'],
+            description: document.data()['description'],rating: document.data()['rating']))
             .toList());
   }
 }
