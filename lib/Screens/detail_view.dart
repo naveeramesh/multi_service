@@ -39,11 +39,14 @@ class _Detail_ViewState extends State<Detail_View> {
     List<MainService> electricalservice =
         Provider.of<List<MainService>>(context);
     return Scaffold(
-      // floatingActionButton: FloatingActionButton(
-      //   backgroundColor: appbarcolor,
-      //   onPressed: () {},
-      //   child: offsetPopup(),
-      // ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        backgroundColor: appbarcolor,
+        child: const Icon(
+          Icons.sell,
+          color: Colors.white,
+        ),
+      ),
       backgroundColor: bgColor,
       body: SizedBox(
         child: Column(
@@ -205,6 +208,4 @@ class _Detail_ViewState extends State<Detail_View> {
       ),
     );
   }
-
-  
 }

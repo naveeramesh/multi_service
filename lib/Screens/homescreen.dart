@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:home_service/Screens/categoryview.dart';
+import 'package:home_service/Screens/detail_view.dart';
 import 'package:home_service/Screens/remove_glow.dart';
 import 'package:home_service/models/mainservice.dart';
 import 'package:home_service/models/offer.dart';
@@ -189,16 +190,27 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               child: Column(
                                 children: [
-                                  Container(
-                                    height: 100,
-                                    width: 200,
-                                    decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                            image: NetworkImage(
-                                                electricalservice[index].image),
-                                            fit: BoxFit.cover),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (b) => Detail_View(
+                                                  service: electricalservice[
+                                                      index])));
+                                    },
+                                    child: Container(
+                                      height: 100,
+                                      width: 200,
+                                      decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                              image: NetworkImage(
+                                                  electricalservice[index]
+                                                      .image),
+                                              fit: BoxFit.cover),
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                    ),
                                   ),
                                   const SizedBox(
                                     height: 10,
@@ -246,16 +258,27 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               child: Column(
                                 children: [
-                                  Container(
-                                    height: 100,
-                                    width: 200,
-                                    decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                            image: NetworkImage(
-                                                electricalservice[index].image),
-                                            fit: BoxFit.cover),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (b) => Detail_View(
+                                                  service: electricalservice[
+                                                      index])));
+                                    },
+                                    child: Container(
+                                      height: 100,
+                                      width: 200,
+                                      decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                              image: NetworkImage(
+                                                  electricalservice[index]
+                                                      .image),
+                                              fit: BoxFit.cover),
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                    ),
                                   ),
                                   const SizedBox(
                                     height: 10,
