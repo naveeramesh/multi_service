@@ -84,31 +84,34 @@ class _HomeScreenState extends State<HomeScreen> {
                             Icons.search, 400),
                       ),
                     ),
-                    SizedBox(
-                        child: Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: CarouselSlider.builder(
-                        itemCount: offer.length,
-                        itemBuilder: (context, index, realIndex) {
-                          return Container(
-                              height: 150,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  image: DecorationImage(
-                                      image: NetworkImage(offer[index].image),
-                                      fit: BoxFit.cover)));
-                        },
-                        options: CarouselOptions(
-                          height: 150.0,
-                          enlargeCenterPage: true,
-                          autoPlay: true,
-                          autoPlayCurve: Curves.fastOutSlowIn,
-                          enableInfiniteScroll: true,
-                          autoPlayAnimationDuration:
-                              const Duration(milliseconds: 800),
-                        ),
-                      ),
-                    )),
+                    offer.isEmpty
+                        ? const Center(child: SizedBox())
+                        : SizedBox(
+                            child: Padding(
+                            padding: const EdgeInsets.only(top: 20),
+                            child: CarouselSlider.builder(
+                              itemCount: 4,
+                              itemBuilder: (context, index, realIndex) {
+                                return Container(
+                                    height: 150,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        image: DecorationImage(
+                                            image: NetworkImage(
+                                                offer[index].image),
+                                            fit: BoxFit.cover)));
+                              },
+                              options: CarouselOptions(
+                                height: 150.0,
+                                enlargeCenterPage: true,
+                                autoPlay: true,
+                                autoPlayCurve: Curves.fastOutSlowIn,
+                                enableInfiniteScroll: true,
+                                autoPlayAnimationDuration:
+                                    const Duration(milliseconds: 800),
+                              ),
+                            ),
+                          )),
                     Padding(
                       padding: const EdgeInsets.only(left: 20.0, top: 20),
                       child: Helper.text("Choose your service", 18, 0,

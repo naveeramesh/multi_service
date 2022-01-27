@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:home_service/Screens/detail_view.dart';
 import 'package:home_service/Screens/remove_glow.dart';
-import 'package:home_service/main.dart';
 import 'package:home_service/models/mainservice.dart';
-import 'package:home_service/models/service.dart';
 import 'package:home_service/utils/constants.dart';
 import 'package:provider/provider.dart';
 
@@ -47,28 +46,38 @@ class _CategoryViewState extends State<CategoryView> {
                 return Padding(
                   padding:
                       const EdgeInsets.only(left: 20.0, right: 20, top: 20),
-                  child: Container(
-                    height: 80,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: iconcolor,
-                    ),
-                    child: Row(
-                      children: [
-                        Container(
-                            height: 80,
-                            width: 90,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                image: DecorationImage(
-                                    image: NetworkImage(service[index].image),
-                                    fit: BoxFit.cover))),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        Helper.text(service[index].title.toString(), 15, 0,
-                            Colors.black, FontWeight.normal, TextAlign.center)
-                      ],
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (b) => Detail_View(
+                                service: service[index],
+                              )));
+                    },
+                    child: Container(
+                      height: 80,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: iconcolor,
+                      ),
+                      child: Row(
+                        children: [
+                          Container(
+                              height: 80,
+                              width: 90,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  image: DecorationImage(
+                                      image: NetworkImage(service[index].image),
+                                      fit: BoxFit.cover))),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          Helper.text(service[index].title.toString(), 15, 0,
+                              Colors.black, FontWeight.normal, TextAlign.center)
+                        ],
+                      ),
                     ),
                   ),
                 );

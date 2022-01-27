@@ -1,28 +1,46 @@
+// To parse this JSON data, do
+//
+//     final mainService = mainServiceFromJson(jsonString);
+
+import 'dart:convert';
+
+MainService mainServiceFromJson(String str) =>
+    MainService.fromJson(json.decode(str));
+
+String mainServiceToJson(MainService data) => json.encode(data.toJson());
+
 class MainService {
   MainService({
     this.title,
     this.price,
-    this.video,
+    required this.video,
     required this.image,
     this.category,
+    this.description
   });
 
   String? title;
-  String? video;
   int? price;
+  String video;
   String image;
   String? category;
+  String? description;
 
-  MainService.fromJson(Map<String, dynamic> json)
-      : title = json["title"],
-        price = json["price"],
-        image = json["image"],
-        category = json["category"];
+  factory MainService.fromJson(Map<String, dynamic> json) => MainService(
+        title: json["title"],
+        price: json["price"],
+        video: json["video"],
+        image: json["image"],
+        category: json["category"],
+        description: json['description']
+      );
 
   Map<String, dynamic> toJson() => {
         "title": title,
         "price": price,
+        "video": video,
         "image": image,
         "category": category,
+        "description":description
       };
 }

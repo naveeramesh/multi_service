@@ -23,7 +23,8 @@ class FbDatabase {
   Stream<List<MainService>> getelectrical(String collection) {
     return firebaseFirestore.collection(collection).snapshots().map(
         (snapShot) => snapShot.docs
-            .map((document) => MainService.fromJson(document.data()))
+            .map((document) => MainService(image: document.data()['image'],video: document.data()['video'],
+            title: document.data()['title'],category: document.data()['category'],price: document.data()['price']))
             .toList());
   }
 }
