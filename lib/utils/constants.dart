@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 final Color bgColor = Colors.white;
 // ignore: prefer_const_constructors
-final Color iconcolor = Color.fromRGBO(239, 151, 53, 1);
+final Color iconcolor = Colors.grey[200]!;
 
 // ignore: prefer_const_constructors
 final Color appbarcolor = Color.fromRGBO(48, 175, 126, 1);
