@@ -2,11 +2,13 @@ class MainService {
   MainService({
     this.title,
     this.price,
+    this.video,
     required this.image,
     this.category,
   });
 
   String? title;
+  String? video;
   int? price;
   String image;
   String? category;
@@ -24,4 +26,3 @@ class MainService {
         "category": category,
       };
 }
-

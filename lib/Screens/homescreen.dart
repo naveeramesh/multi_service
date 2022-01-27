@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:home_service/Screens/detail.dart';
+import 'package:home_service/Screens/remove_glow.dart';
 import 'package:home_service/models/mainservice.dart';
 import 'package:home_service/models/offer.dart';
 import 'package:home_service/models/service.dart';
@@ -44,224 +45,229 @@ class _HomeScreenState extends State<HomeScreen> {
         borderRadius: BorderRadius.all(Radius.circular(16)),
       ),
       drawer: Drawer(elevation: 0, child: drawerbar()),
-      child: Scaffold(
-        backgroundColor: bgColor,
-        appBar: AppBar(
+      child: ScrollConfiguration(
+        behavior: MyBehavior(),
+        child: Scaffold(
           backgroundColor: bgColor,
-          elevation: 0,
-          title: Helper.text(
-              "Screw", 20, 0, Colors.black, FontWeight.bold, TextAlign.center),
-          leading: IconButton(
-            onPressed: appBarDrawer.handleMenuButtonPressed,
-            icon: ValueListenableBuilder<AdvancedDrawerValue>(
-              valueListenable: appBarDrawer.advancedDrawerController,
-              builder: (_, value, __) {
-                return AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 250),
-                  child: Icon(
-                    value.visible ? Icons.clear : Icons.menu,
-                    key: ValueKey<bool>(value.visible),
-                    color: Colors.black,
-                  ),
-                );
-              },
+          appBar: AppBar(
+            backgroundColor: bgColor,
+            elevation: 0,
+            title: Helper.text(
+                "Screw", 20, 0, Colors.black, FontWeight.bold, TextAlign.center),
+            leading: IconButton(
+              onPressed: appBarDrawer.handleMenuButtonPressed,
+              icon: ValueListenableBuilder<AdvancedDrawerValue>(
+                valueListenable: appBarDrawer.advancedDrawerController,
+                builder: (_, value, __) {
+                  return AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 250),
+                    child: Icon(
+                      value.visible ? Icons.clear : Icons.menu,
+                      key: ValueKey<bool>(value.visible),
+                      color: Colors.black,
+                    ),
+                  );
+                },
+              ),
             ),
           ),
-        ),
-        body: SingleChildScrollView(
-          child: SizedBox(
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 10.0),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20.0, right: 20),
-                  child: boxcontainer(
-                      "Search...", Colors.grey[200]!, 10, Icons.search, 400),
-                ),
-              ),
-              SizedBox(
+          body: SingleChildScrollView(
+            child: SizedBox(
+              child:
+                  Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
                   child: Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: CarouselSlider.builder(
-                  itemCount: offer.length,
-                  itemBuilder: (context, index, realIndex) {
-                    return Container(
-                        height: 150,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            image: DecorationImage(
-                                image: NetworkImage(offer[index].image),
-                                fit: BoxFit.cover)));
-                  },
-                  options: CarouselOptions(
-                    height: 150.0,
-                    enlargeCenterPage: true,
-                    autoPlay: true,
-                    autoPlayCurve: Curves.fastOutSlowIn,
-                    enableInfiniteScroll: true,
-                    autoPlayAnimationDuration:
-                        const Duration(milliseconds: 800),
+                    padding: const EdgeInsets.only(left: 20.0, right: 20),
+                    child: boxcontainer(
+                        "Search...", Colors.grey[200]!, 10, Icons.search, 400),
                   ),
                 ),
-              )),
-              Padding(
-                padding: const EdgeInsets.only(left: 20.0, top: 20),
-                child: Helper.text("Choose your service", 18, 0, Colors.black,
-                    FontWeight.w500, TextAlign.start),
-              ),
-              SizedBox(
-                height: 200,
-                child: Padding(
-                  padding:
-                      const EdgeInsets.only(left: 20.0, right: 20, top: 20),
-                  child: GridView.builder(
-                    itemCount: service.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (b) => const DetailScreen()));
-                          },
-                          child: Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Colors.grey[200]),
-                              child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SizedBox(
-                                      height: 50,
-                                      width: 100,
-                                      child:
-                                          Image.network(service[index].image),
-                                    ),
-                                  ])),
-                        ),
-                      );
+                SizedBox(
+                    child: Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: CarouselSlider.builder(
+                    itemCount: offer.length,
+                    itemBuilder: (context, index, realIndex) {
+                      return Container(
+                          height: 150,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              image: DecorationImage(
+                                  image: NetworkImage(offer[index].image),
+                                  fit: BoxFit.cover)));
                     },
-                    gridDelegate:
-                        const SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 100,
+                    options: CarouselOptions(
+                      height: 150.0,
+                      enlargeCenterPage: true,
+                      autoPlay: true,
+                      autoPlayCurve: Curves.fastOutSlowIn,
+                      enableInfiniteScroll: true,
+                      autoPlayAnimationDuration:
+                          const Duration(milliseconds: 800),
+                    ),
+                  ),
+                )),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20.0, top: 20),
+                  child: Helper.text("Choose your service", 18, 0, Colors.black,
+                      FontWeight.w500, TextAlign.start),
+                ),
+                SizedBox(
+                  height: 200,
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.only(left: 20.0, right: 20, top: 20),
+                    child: GridView.builder(
+                      itemCount: service.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (b) =>  DetailScreen(
+                                        name: service[index].title.toString(),
+                                      )));
+                            },
+                            child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.grey[200]),
+                                child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        height: 50,
+                                        width: 100,
+                                        child:
+                                            Image.network(service[index].image),
+                                      ),
+                                    ])),
+                          ),
+                        );
+                      },
+                      gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 100,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20.0, top: 20),
-                child: Helper.text("Electrical Appliances", 18, 0, Colors.black,
-                    FontWeight.w500, TextAlign.start),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20.0, top: 5),
-                child: Helper.text("Appliances we do for service", 14, 0,
-                    Colors.grey, FontWeight.normal, TextAlign.start),
-              ),
-              SizedBox(
-                height: 170,
-                width: double.infinity,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: electricalservice.length,
-                  itemBuilder: (context, index) {
-                    if (electricalservice[index].category == "Electricals") {
-                      return Padding(
-                        padding: const EdgeInsets.only(
-                          left: 20.0,
-                          top: 20,
-                        ),
-                        child: Column(
-                          children: [
-                            Container(
-                              height: 100,
-                              width: 200,
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: NetworkImage(
-                                          electricalservice[index].image),
-                                      fit: BoxFit.cover),
-                                  borderRadius: BorderRadius.circular(10)),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Helper.text(
-                                electricalservice[index].title.toString(),
-                                15,
-                                0,
-                                Colors.black,
-                                FontWeight.normal,
-                                TextAlign.center),
-                          ],
-                        ),
-                      );
-                    } else {
-                      return SizedBox();
-                    }
-                  },
+                Padding(
+                  padding: const EdgeInsets.only(left: 20.0, top: 20),
+                  child: Helper.text("Electrical Appliances", 18, 0, Colors.black,
+                      FontWeight.w500, TextAlign.start),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 20.0,
+                Padding(
+                  padding: const EdgeInsets.only(left: 20.0, top: 5),
+                  child: Helper.text("Appliances we do for service", 14, 0,
+                      Colors.grey, FontWeight.normal, TextAlign.start),
                 ),
-                child: Helper.text("Cleaning", 18, 0, Colors.black,
-                    FontWeight.w500, TextAlign.start),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20.0, top: 5),
-                child: Helper.text("Works in Cleaning", 14, 0, Colors.grey,
-                    FontWeight.normal, TextAlign.start),
-              ),
-              SizedBox(
-                height: 200,
-                width: double.infinity,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: electricalservice.length,
-                  itemBuilder: (context, index) {
-                    if (electricalservice[index].category == "Cleaning") {
-                      return Padding(
-                        padding: const EdgeInsets.only(
-                          left: 20.0,
-                          top: 20,
-                        ),
-                        child: Column(
-                          children: [
-                            Container(
-                              height: 100,
-                              width: 200,
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: NetworkImage(
-                                          electricalservice[index].image),
-                                      fit: BoxFit.cover),
-                                  borderRadius: BorderRadius.circular(10)),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Helper.text(
-                                electricalservice[index].title.toString(),
-                                15,
-                                0,
-                                Colors.black,
-                                FontWeight.normal,
-                                TextAlign.center),
-                          ],
-                        ),
-                      );
-                    } else {
-                      return const SizedBox();
-                    }
-                  },
+                SizedBox(
+                  height: 170,
+                  width: double.infinity,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: electricalservice.length,
+                    itemBuilder: (context, index) {
+                      if (electricalservice[index].category == "Electricals") {
+                        return Padding(
+                          padding: const EdgeInsets.only(
+                            left: 20.0,
+                            top: 20,
+                          ),
+                          child: Column(
+                            children: [
+                              Container(
+                                height: 100,
+                                width: 200,
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: NetworkImage(
+                                            electricalservice[index].image),
+                                        fit: BoxFit.cover),
+                                    borderRadius: BorderRadius.circular(10)),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Helper.text(
+                                  electricalservice[index].title.toString(),
+                                  15,
+                                  0,
+                                  Colors.black,
+                                  FontWeight.normal,
+                                  TextAlign.center),
+                            ],
+                          ),
+                        );
+                      } else {
+                        return SizedBox();
+                      }
+                    },
+                  ),
                 ),
-              ),
-            ]),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 20.0,
+                  ),
+                  child: Helper.text("Cleaning", 18, 0, Colors.black,
+                      FontWeight.w500, TextAlign.start),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20.0, top: 5),
+                  child: Helper.text("Works in Cleaning", 14, 0, Colors.grey,
+                      FontWeight.normal, TextAlign.start),
+                ),
+                SizedBox(
+                  height: 200,
+                  width: double.infinity,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: electricalservice.length,
+                    itemBuilder: (context, index) {
+                      if (electricalservice[index].category == "Cleaning") {
+                        return Padding(
+                          padding: const EdgeInsets.only(
+                            left: 20.0,
+                            top: 20,
+                          ),
+                          child: Column(
+                            children: [
+                              Container(
+                                height: 100,
+                                width: 200,
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: NetworkImage(
+                                            electricalservice[index].image),
+                                        fit: BoxFit.cover),
+                                    borderRadius: BorderRadius.circular(10)),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Helper.text(
+                                  electricalservice[index].title.toString(),
+                                  15,
+                                  0,
+                                  Colors.black,
+                                  FontWeight.normal,
+                                  TextAlign.center),
+                            ],
+                          ),
+                        );
+                      } else {
+                        return const SizedBox();
+                      }
+                    },
+                  ),
+                ),
+              ]),
+            ),
           ),
         ),
       ),
