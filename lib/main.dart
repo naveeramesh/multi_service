@@ -1,13 +1,12 @@
 import 'dart:async';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:home_service/advance_drawer/appbar_provider.dart';
 import 'package:home_service/models/mainservice.dart';
 import 'package:home_service/models/offer.dart';
 import 'package:home_service/models/service.dart';
 import 'package:home_service/models/users.dart';
-import 'package:home_service/providers/appbar_provider.dart';
 import 'package:home_service/service/auth.dart';
 import 'package:home_service/service/database.dart';
 import 'package:provider/provider.dart';
