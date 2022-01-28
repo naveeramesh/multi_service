@@ -10,6 +10,7 @@ import 'package:home_service/models/offer.dart';
 import 'package:home_service/models/service.dart';
 import 'package:home_service/models/users.dart';
 import 'package:home_service/providers/appbar_provider.dart';
+import 'package:home_service/service/auth.dart';
 import 'package:home_service/utils/constants.dart';
 import 'package:home_service/widgets/containers.dart';
 import 'package:provider/provider.dart';
@@ -311,6 +312,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Container drawerbar() {
     final Users? users = Provider.of<Users?>(context);
+    final AuthService _authService = AuthService();
     return Container(
         color: Colors.grey[200],
         child: Column(children: [
@@ -403,7 +405,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   child:
                       box("Signin / Join", Colors.black, 10, 250, Colors.white))
-              : box("Logout", Colors.black, 10, 250, Colors.white),
+              : GestureDetector(
+                  onTap: () {
+                    _authService.signout();
+                  },
+                  child: box("Logout", Colors.black, 10, 250, Colors.white)),
           const SizedBox(
             height: 20,
           ),

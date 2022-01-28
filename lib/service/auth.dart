@@ -18,13 +18,6 @@ class AuthService {
     } else {
       return null;
     }
-    // return user != null
-    //     ? Users(
-    //         uid: user.uid,
-    //         image: user.photoURL,
-    //         name: user.displayName,
-    //         email: user.email)
-    //     : null;
   }
 
   Stream<Users?> get user {
@@ -60,6 +53,14 @@ class AuthService {
       return users(user!);
     } catch (e) {
       print(e.toString());
+      return null;
+    }
+  }
+
+  Future signout() async {
+    try {
+      await auth.signOut();
+    } catch (e) {
       return null;
     }
   }
