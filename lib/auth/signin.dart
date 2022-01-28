@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:home_service/Screens/homescreen.dart';
+import 'package:home_service/auth/user_details.dart';
 import 'package:home_service/models/users.dart';
 import 'package:home_service/service/auth.dart';
 import 'package:home_service/utils/constants.dart';
@@ -58,7 +59,7 @@ class _SigninState extends State<Signin> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (b) => const HomeScreen()));
+                              builder: (b) => const User_Details()));
                     });
                   },
                   child: box("Signin without Password", appbarcolor, 10, 250,
