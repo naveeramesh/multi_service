@@ -8,12 +8,11 @@ class AuthService {
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
   Users? users(User? user) {
-    
     if (user != null) {
       addData(user);
       return Users(
           uid: user.uid,
-          image: user.photoURL ,
+          image: user.photoURL,
           name: user.displayName,
           email: user.email ?? "no email");
     } else {
@@ -25,16 +24,7 @@ class AuthService {
     return auth.authStateChanges().map((User? user) => users(user!));
   }
 
-  Future signinAnonymus() async {
-    try {
-      UserCredential usercredential = await auth.signInAnonymously();
-      User? user = usercredential.user;
-      return users(user!);
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
-  }
+  
 
   Future signInWithGoogle() async {
     try {
@@ -53,7 +43,6 @@ class AuthService {
       User? user = result.user;
       return users(user!);
     } catch (e) {
-     
       return e;
     }
   }
@@ -74,4 +63,6 @@ class AuthService {
       'uid': user.uid
     });
   }
+
+  
 }

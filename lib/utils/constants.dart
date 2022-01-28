@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+// ignore: prefer_const_declarations
 final Color bgColor = Colors.white;
 // ignore: prefer_const_constructors
 final Color iconcolor = Colors.grey[200]!;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:home_service/Screens/homescreen.dart';
-import 'package:home_service/auth/user_details.dart';
+
 import 'package:home_service/models/users.dart';
 import 'package:home_service/service/auth.dart';
 import 'package:home_service/utils/constants.dart';
@@ -53,17 +53,6 @@ class _SigninState extends State<Signin> {
               const SizedBox(
                 height: 50,
               ),
-              GestureDetector(
-                  onTap: () async {
-                    await _authService.signinAnonymus().whenComplete(() {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (b) => const User_Details()));
-                    });
-                  },
-                  child: box("Signin without Password", appbarcolor, 10, 250,
-                      Colors.white)),
               const SizedBox(
                 height: 20,
               ),

@@ -410,7 +410,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   onTap: () {
                     _authService
                         .signout()
-                        .whenComplete(() =>  Navigator.pop(
+                        .whenComplete(() =>  Navigator.pushReplacement(
                         context, MaterialPageRoute(builder: (b) =>const SplashScreen())));
                   },
                   child: box("Logout", Colors.black, 10, 250, Colors.white)),
