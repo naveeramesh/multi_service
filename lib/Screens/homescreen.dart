@@ -4,9 +4,11 @@ import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:home_service/Screens/categoryview.dart';
 import 'package:home_service/Screens/detail_view.dart';
 import 'package:home_service/Screens/remove_glow.dart';
+import 'package:home_service/auth/signin.dart';
 import 'package:home_service/models/mainservice.dart';
 import 'package:home_service/models/offer.dart';
 import 'package:home_service/models/service.dart';
+import 'package:home_service/models/users.dart';
 import 'package:home_service/providers/appbar_provider.dart';
 import 'package:home_service/utils/constants.dart';
 import 'package:home_service/widgets/containers.dart';
@@ -308,6 +310,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Container drawerbar() {
+    final Users? users = Provider.of<Users?>(context);
     return Container(
         color: Colors.grey[200],
         child: Column(children: [
@@ -392,7 +395,15 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           const Spacer(),
-          box("Signin / Join", Colors.black, 10, 250, Colors.white),
+          users?.uid == null
+              ? GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context, MaterialPageRoute(builder: (b) => Signin()));
+                  },
+                  child:
+                      box("Signin / Join", Colors.black, 10, 250, Colors.white))
+              : box("Logout", Colors.black, 10, 250, Colors.white),
           const SizedBox(
             height: 20,
           ),

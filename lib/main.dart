@@ -6,7 +6,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:home_service/models/mainservice.dart';
 import 'package:home_service/models/offer.dart';
 import 'package:home_service/models/service.dart';
+import 'package:home_service/models/users.dart';
 import 'package:home_service/providers/appbar_provider.dart';
+import 'package:home_service/service/auth.dart';
 import 'package:home_service/service/database.dart';
 import 'package:provider/provider.dart';
 
@@ -27,6 +29,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => AppBar_Drawer(),
         ),
+        StreamProvider<Users?>.value(
+          value: AuthService().user,
+          initialData: null,
+        ),
         StreamProvider<List<Offer>>.value(
           value: FbDatabase().getoffer("Offers"),
           initialData: [],
@@ -39,7 +45,6 @@ class MyApp extends StatelessWidget {
           value: FbDatabase().getelectrical("Main Service"),
           initialData: [],
         ),
-        
       ],
       child: MaterialApp(
           title: 'Flutter Demo',
@@ -76,7 +81,7 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Text(
           "Serwe",
           style: GoogleFonts.roboto(
-              color: Colors.black, fontWeight: FontWeight.bold,fontSize:20),
+              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),
         ),
       )),
     );
