@@ -74,9 +74,9 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Center(
           child: SizedBox(
         child: Text(
-          "Home Service",
+          "Serwe",
           style: GoogleFonts.roboto(
-              color: Colors.black, fontWeight: FontWeight.bold),
+              color: Colors.black, fontWeight: FontWeight.bold,fontSize:20),
         ),
       )),
     );
