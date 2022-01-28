@@ -5,6 +5,7 @@ import 'package:home_service/Screens/categoryview.dart';
 import 'package:home_service/Screens/detail_view.dart';
 import 'package:home_service/Screens/remove_glow.dart';
 import 'package:home_service/auth/signin.dart';
+import 'package:home_service/main.dart';
 import 'package:home_service/models/mainservice.dart';
 import 'package:home_service/models/offer.dart';
 import 'package:home_service/models/service.dart';
@@ -401,13 +402,16 @@ class _HomeScreenState extends State<HomeScreen> {
               ? GestureDetector(
                   onTap: () {
                     Navigator.push(
-                        context, MaterialPageRoute(builder: (b) => Signin()));
+                        context, MaterialPageRoute(builder: (b) =>const Signin()));
                   },
                   child:
                       box("Signin / Join", Colors.black, 10, 250, Colors.white))
               : GestureDetector(
                   onTap: () {
-                    _authService.signout();
+                    _authService
+                        .signout()
+                        .whenComplete(() =>  Navigator.pop(
+                        context, MaterialPageRoute(builder: (b) =>const SplashScreen())));
                   },
                   child: box("Logout", Colors.black, 10, 250, Colors.white)),
           const SizedBox(
