@@ -8,13 +8,14 @@ class AuthService {
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
   Users? users(User? user) {
+    
     if (user != null) {
       addData(user);
       return Users(
           uid: user.uid,
-          image: user.photoURL,
+          image: user.photoURL ,
           name: user.displayName,
-          email: user.email);
+          email: user.email ?? "no email");
     } else {
       return null;
     }
@@ -52,8 +53,8 @@ class AuthService {
       User? user = result.user;
       return users(user!);
     } catch (e) {
-      print(e.toString());
-      return null;
+     
+      return e;
     }
   }
 
