@@ -230,7 +230,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             );
                           } else {
-                            return SizedBox();
+                            return const SizedBox();
                           }
                         },
                       ),
@@ -320,11 +320,17 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(
             height: 50,
           ),
-          const CircleAvatar(
-            radius: 50,
-            backgroundColor: Colors.black,
-            child: Icon(Icons.person, color: Colors.white),
-          ),
+          if (users == null)
+            const CircleAvatar(
+              radius: 50,
+              backgroundColor: Colors.black,
+              child: Icon(Icons.person, color: Colors.white),
+            )
+          else
+            CircleAvatar(
+                radius: 50,
+                backgroundColor: Colors.black,
+                backgroundImage: NetworkImage(users.image.toString())),
           Padding(
             padding: const EdgeInsets.only(
               left: 30.0,
@@ -398,21 +404,20 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           const Spacer(),
-          
           users == null
               ? GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                        context, MaterialPageRoute(builder: (b) =>const Signin()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (b) => const Signin()));
                   },
                   child:
                       box("Signin / Join", Colors.black, 10, 250, Colors.white))
               : GestureDetector(
                   onTap: () {
-                    _authService
-                        .signout()
-                        .whenComplete(() =>  Navigator.push(
-                        context, MaterialPageRoute(builder: (b) =>const SplashScreen())));
+                    _authService.signout().whenComplete(() => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (b) => const SplashScreen())));
                   },
                   child: box("Logout", Colors.black, 10, 250, Colors.white)),
           const SizedBox(

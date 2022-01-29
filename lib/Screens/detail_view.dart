@@ -167,15 +167,24 @@ class _Detail_ViewState extends State<Detail_View> {
                       ),
                       child: Column(
                         children: [
-                          Container(
-                            height: 70,
-                            width: 90,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: NetworkImage(
-                                        electricalservice[index].image),
-                                    fit: BoxFit.cover),
-                                borderRadius: BorderRadius.circular(10)),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (b) => Detail_View(
+                                          service: electricalservice[index])));
+                            },
+                            child: Container(
+                              height: 70,
+                              width: 90,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: NetworkImage(
+                                          electricalservice[index].image),
+                                      fit: BoxFit.cover),
+                                  borderRadius: BorderRadius.circular(10)),
+                            ),
                           ),
                         ],
                       ),
