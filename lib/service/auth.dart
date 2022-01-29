@@ -8,23 +8,21 @@ class AuthService {
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
   Users? users(User? user) {
-    if (user != null) {
+    if (user == null) {
+      return null;
+    } else {
       addData(user);
       return Users(
           uid: user.uid,
           image: user.photoURL,
           name: user.displayName,
           email: user.email ?? "no email");
-    } else {
-      return null;
     }
   }
 
   Stream<Users?> get user {
-    return auth.authStateChanges().map((User? user) => users(user!));
+    return auth.authStateChanges().map((User? user) => users(user));
   }
-
-  
 
   Future signInWithGoogle() async {
     try {
@@ -49,7 +47,7 @@ class AuthService {
 
   Future signout() async {
     try {
-      await auth.signOut();
+      return await auth.signOut();
     } catch (e) {
       return null;
     }
@@ -63,6 +61,4 @@ class AuthService {
       'uid': user.uid
     });
   }
-
-  
 }

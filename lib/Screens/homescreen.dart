@@ -398,7 +398,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           const Spacer(),
-          users?.uid == null
+          
+          users == null
               ? GestureDetector(
                   onTap: () {
                     Navigator.push(
@@ -410,7 +411,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   onTap: () {
                     _authService
                         .signout()
-                        .whenComplete(() =>  Navigator.pushReplacement(
+                        .whenComplete(() =>  Navigator.push(
                         context, MaterialPageRoute(builder: (b) =>const SplashScreen())));
                   },
                   child: box("Logout", Colors.black, 10, 250, Colors.white)),
